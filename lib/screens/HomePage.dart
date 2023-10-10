@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:video_player_tv/models/Channel.dart';
+import 'package:video_player_tv/screens/VideoPlayerScreen.dart';
 
 class HomePage extends StatelessWidget {
   static Future<List<Channel>> loadChannels() async {
@@ -38,7 +39,13 @@ class HomePage extends StatelessWidget {
                   itemCount: (list == null) ? 0 : snapshot.data!.length,
                   itemBuilder: (item, index) {
                     return MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return VideoPlayerScreen(
+                                videoUrl: snapshot.data![index].sources[0]);
+                          }));
+                        },
                         child: Card(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
