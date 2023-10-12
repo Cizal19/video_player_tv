@@ -73,9 +73,6 @@ class _ChannelListState extends State<ChannelList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Channel List"),
-      ),
       body: Material(
         child: FutureBuilder(
           future: channelsFuture,
