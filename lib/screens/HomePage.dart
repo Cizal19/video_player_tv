@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Channel.channelsFromSnapshot(dataList);
   }
 
-  void handleUpNavigation(List<Channel> list) {
+  void handleUpNavigation(List<Channel> channels) {
     if (selectedItemIndex > 0) {
       setState(() {
         selectedItemIndex--;
@@ -46,8 +46,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void handleDownNavigation(List<Channel> list) {
-    if (selectedItemIndex < list.length - 1) {
+  void handleDownNavigation(List<Channel> channels) {
+    if (selectedItemIndex < channels.length - 1) {
       setState(() {
         selectedItemIndex++;
       });
@@ -55,17 +55,18 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void handleSelect(List<Channel> list) {
+  void handleSelect(List<Channel> channels) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return VideoPlayerScreen(videoUrl: list[selectedItemIndex].sources[0]);
+      return VideoPlayerScreen(
+          videoUrl: channels[selectedItemIndex].sources[0]);
     }));
   }
 
   void _scrollToItem(int index) {
     _scrollController.animateTo(
-      index * 50, // Adjust as needed
+      index * 60,
       duration: Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
+      curve: Curves.easeOut,
     );
   }
 
@@ -99,11 +100,15 @@ class _HomePageState extends State<HomePage> {
                             handleSelect(list!);
                           }
                         }
-                        return KeyEventResult.handled;
+                        return KeyEventResult.ignored;
                       },
                       child: Card(
-                        color: selectedItemIndex == index
-                            ? Colors.blue // Highlight the selected item
+                        shape: selectedItemIndex == index
+                            ? RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: BorderSide(
+                                    color: Colors.blue,
+                                    width: 2)) // Highlight the selected item
                             : null,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
