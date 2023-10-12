@@ -6,12 +6,12 @@ import 'package:flutter/services.dart'
 import 'package:video_player_tv/models/Channel.dart';
 import 'package:video_player_tv/screens/VideoPlayerScreen.dart';
 
-class HomePage extends StatefulWidget {
+class ChannelList extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _ChannelListState createState() => _ChannelListState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ChannelListState extends State<ChannelList> {
   late Future<List<Channel>> channelsFuture;
   int selectedItemIndex = 0;
   final ScrollController _scrollController = ScrollController();
