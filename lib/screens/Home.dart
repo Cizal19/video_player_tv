@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_tv/widgets/CardsScroll.dart';
 import 'package:video_player_tv/widgets/HomePageCarousel.dart';
 
 class Home extends StatelessWidget {
@@ -7,7 +8,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(children: [HomePageCarousel()]),
+      child: Column(children: [HomePageCarousel(), CardsScroll()]),
     );
   }
 }
