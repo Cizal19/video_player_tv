@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               width: double.infinity,
             ),
             _ControlsOverlay(controller: _controller),
-            VideoProgressIndicator(_controller, allowScrubbing: true),
+            VideoProgressIndicator(_controller, allowScrubbing: false),
           ],
         ),
       ),
@@ -86,84 +87,131 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
           height: 50,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 50),
-              reverseDuration: Duration(milliseconds: 200),
+            child: FocusTraversalGroup(
               child: Row(
                 children: [
-                  MaterialButton(
-                    onPressed: () async {
-                      var position = await widget.controller.position;
-
-                      widget.controller
-                          .seekTo(Duration(seconds: position!.inSeconds - 5));
+                  Focus(
+                    onKey: (node, event) {
+                      if (event is RawKeyDownEvent) {
+                        if (event.logicalKey == LogicalKeyboardKey.select) {
+                          seekLeft();
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
                     },
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 20.0,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {},
+                      focusColor: Colors.blue,
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20,
                   ),
-                  // controller.value.isPlaying
-                  MaterialButton(
-                    onPressed: () {
-                      setState(() {
+                  Focus(
+                    onKey: (node, event) {
+                      if (event is RawKeyDownEvent) {
+                        if (event.logicalKey == LogicalKeyboardKey.select) {
+                          setState(() {
+                            widget.controller.value.isPlaying
+                                ? widget.controller.pause()
+                                : widget.controller.play();
+                          });
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
+                    },
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {},
+                      focusColor: Colors.blue,
+                      child: Icon(
                         widget.controller.value.isPlaying
-                            ? widget.controller.pause()
-                            : widget.controller.play();
-                      });
-                    },
-                    child: Icon(
-                      widget.controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      color: Colors.white,
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20,
                   ),
-                  MaterialButton(
-                    onPressed: () async {
-                      var position = await widget.controller.position;
-
-                      widget.controller
-                          .seekTo(Duration(seconds: position!.inSeconds + 5));
+                  Focus(
+                    onKey: (node, event) {
+                      if (event is RawKeyDownEvent) {
+                        if (event.logicalKey == LogicalKeyboardKey.select) {
+                          seekRight();
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
                     },
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 20.0,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () async {
+                        var position = await widget.controller.position;
+                        widget.controller
+                            .seekTo(Duration(seconds: position!.inSeconds + 5));
+                      },
+                      focusColor: Colors.blue,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20,
                   ),
-                  PopupMenuButton<double>(
-                    initialValue: widget.controller.value.playbackSpeed,
-                    tooltip: 'Playback speed',
-                    color: Colors.white,
-                    onSelected: (speed) {
-                      widget.controller.setPlaybackSpeed(speed);
+                  Focus(
+                    onKey: (node, event) {
+                      if (event is RawKeyDownEvent) {
+                        if (event.logicalKey == LogicalKeyboardKey.select) {
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
                     },
-                    itemBuilder: (context) {
-                      return [
-                        for (final speed
-                            in _ControlsOverlay._examplePlaybackRates)
-                          PopupMenuItem(
-                            value: speed,
-                            child: Text(
-                              '${speed}x',
-                            ),
-                          )
-                      ];
-                    },
-                    child: Text(
-                      '${widget.controller.value.playbackSpeed}x',
-                      style: TextStyle(color: Colors.white),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {},
+                      focusColor: Colors.blue,
+                      child: PopupMenuButton<double>(
+                        initialValue: widget.controller.value.playbackSpeed,
+                        tooltip: 'Playback speed',
+                        color: Colors.white,
+                        onSelected: (speed) {
+                          widget.controller.setPlaybackSpeed(speed);
+                        },
+                        itemBuilder: (context) {
+                          return [
+                            for (final speed
+                                in _ControlsOverlay._examplePlaybackRates)
+                              PopupMenuItem(
+                                value: speed,
+                                child: Text(
+                                  '${speed}x',
+                                ),
+                              )
+                          ];
+                        },
+                        child: Text(
+                          '${widget.controller.value.playbackSpeed}x',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -173,5 +221,15 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
         ),
       ],
     );
+  }
+
+  void seekLeft() async {
+    var position = await widget.controller.position;
+    widget.controller.seekTo(Duration(seconds: position!.inSeconds - 5));
+  }
+
+  void seekRight() async {
+    var position = await widget.controller.position;
+    widget.controller.seekTo(Duration(seconds: position!.inSeconds + 5));
   }
 }
