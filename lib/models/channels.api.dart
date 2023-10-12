@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:video_player_tv/models/Channel.dart';
 
 class ChannelsApi {
-  static Future<List<Channel>> getCarouselItems() async {
+  static Future<List<Channel>> getChannels() async {
     final jsonString = await rootBundle.loadString('lib/data/videos.json');
     final data = json.decode(jsonString);
 
