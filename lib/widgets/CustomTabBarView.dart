@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_tv/screens/ChannelList.dart';
+import 'package:video_player_tv/widgets/CategoryGrid.dart';
 
 class CustomTabBarView extends StatelessWidget {
   const CustomTabBarView({super.key});
@@ -13,9 +14,7 @@ class CustomTabBarView extends StatelessWidget {
       Center(
         child: Text("Home Tab Content"),
       ),
-      Center(
-        child: Text("Categories Tab Content"),
-      ),
+      CategoryGrid(),
       Center(
         child: Text("Movies Tab Content"),
       ),
