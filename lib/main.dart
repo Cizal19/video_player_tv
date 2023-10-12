@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_player_tv/screens/ChannelList.dart';
 import 'package:video_player_tv/screens/Home.dart';
 
 void main() {
