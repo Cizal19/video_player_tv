@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:video_player_tv/widgets/CustomAppBar.dart';
 import 'package:video_player_tv/widgets/CustomTabBarView.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Main extends StatefulWidget {
+  const Main({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Main> createState() => _MainState();
 }
 
-class _HomeState extends State<Home> {
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
