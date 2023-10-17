@@ -16,17 +16,24 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        childAspectRatio: 16 / 9,
+    return FocusTraversalGroup(
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          childAspectRatio: 16 / 9,
+        ),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return Focus(
+            onFocusChange: (hasFocus) {
+              if (hasFocus) {}
+            },
+            child: CategoryItem(
+              categoryName: categories[index],
+            ),
+          );
+        },
       ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        return CategoryItem(
-          categoryName: categories[index],
-        );
-      },
     );
   }
 }

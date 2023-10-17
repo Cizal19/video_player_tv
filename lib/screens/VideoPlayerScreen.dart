@@ -142,7 +142,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Focus(
@@ -158,13 +158,9 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                     child: MaterialButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
-                      onPressed: () async {
-                        var position = await widget.controller.position;
-                        widget.controller
-                            .seekTo(Duration(seconds: position!.inSeconds + 5));
-                      },
+                      onPressed: () {},
                       focusColor: Colors.blue,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.white,
                         size: 20.0,
