@@ -44,6 +44,29 @@ class Home extends StatelessWidget {
           ),
         ),
         CardsScroll(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.thumb_up,
+                color: Colors.red,
+              ),
+              const SizedBox(
+                width: 2.0,
+              ),
+              Text(
+                "Recommended".toUpperCase(),
+                style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 20.0,
+                    letterSpacing: 2.0),
+              ),
+            ],
+          ),
+        ),
+        CardsScroll(),
       ]),
     );
   }
