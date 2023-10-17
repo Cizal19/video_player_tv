@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:video_player_tv/models/Channel.dart';
 import 'package:video_player_tv/models/channels.api.dart';
+import 'package:video_player_tv/screens/VideoPlayerScreen.dart';
 
 class HomePageCarousel extends StatefulWidget {
   const HomePageCarousel({super.key});
@@ -81,7 +82,12 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
                                     ),
                                     ElevatedButton.icon(
                                         onPressed: () {
-                                          // Add your play button action here
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return VideoPlayerScreen(
+                                                videoUrl: item.sources[0]);
+                                          }));
                                         },
                                         icon: Icon(
                                           Icons.play_arrow,
