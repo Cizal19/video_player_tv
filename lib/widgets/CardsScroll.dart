@@ -59,7 +59,13 @@ class _CardsScrollState extends State<CardsScroll> {
                         return KeyEventResult.ignored;
                       },
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return VideoPlayerScreen(
+                                videoUrl: list[index].sources[0]);
+                          }));
+                        },
                         focusColor: Colors.blue,
                         child: Container(
                           width: 250.0, // Adjust card width as needed
