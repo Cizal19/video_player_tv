@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_tv/screens/CategoryPage.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<String> categories = [
@@ -25,9 +26,6 @@ class CategoryGrid extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return Focus(
-            onFocusChange: (hasFocus) {
-              if (hasFocus) {}
-            },
             child: CategoryItem(
               categoryName: categories[index],
             ),
@@ -59,19 +57,26 @@ class CategoryItem extends StatelessWidget {
       'Adventure': Colors.deepOrange,
     };
 
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: categoryColors[categoryName], // Set the background color
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Center(
-        child: Text(
-          categoryName,
-          style: TextStyle(
-            color: Colors.white, // Text color
-            fontWeight: FontWeight.bold,
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return CategoryPage(title: categoryName);
+        }));
+      },
+      child: Container(
+        margin: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: categoryColors[categoryName], // Set the background color
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Center(
+          child: Text(
+            categoryName,
+            style: TextStyle(
+              color: Colors.white, // Text color
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
