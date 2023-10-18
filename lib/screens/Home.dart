@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        CardsScroll(),
+        // CardsScroll(),
       ]),
     );
   }

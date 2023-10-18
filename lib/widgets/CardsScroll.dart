@@ -58,39 +58,29 @@ class _CardsScrollState extends State<CardsScroll> {
                         }
                         return KeyEventResult.ignored;
                       },
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return VideoPlayerScreen(
-                                videoUrl: list[index].sources[0]);
-                          }));
-                        },
-                        focusColor: Colors.blue,
-                        child: Container(
-                          width: 250.0, // Adjust card width as needed
-                          // margin: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Card(
-                            elevation: 4.0,
-                            child: Column(
-                              children: <Widget>[
-                                Image.network(
-                                  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/${list[index].thumb}",
-                                  fit: BoxFit.cover,
-                                  height: 150.0,
-                                  width: double.infinity,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    list[index].title,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                    ),
+                      child: Container(
+                        width: 250.0, // Adjust card width as needed
+                        // margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Card(
+                          elevation: 4.0,
+                          child: Column(
+                            children: <Widget>[
+                              Image.network(
+                                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/${list[index].thumb}",
+                                fit: BoxFit.cover,
+                                height: 150.0,
+                                width: double.infinity,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  list[index].title,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

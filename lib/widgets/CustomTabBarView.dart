@@ -20,6 +20,8 @@ class CustomTabBarView extends StatelessWidget {
       Center(
         child: Text("Shows Tab Content"),
       ),
+      // ChannelList(),
+      // ChannelList(),
       ChannelList()
     ]);
   }
