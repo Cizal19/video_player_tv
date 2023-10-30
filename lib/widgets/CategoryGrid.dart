@@ -96,6 +96,9 @@ class _CategoryItemState extends State<CategoryItem> {
             return InkWell(
               onTap: () {
                 _focusNode.requestFocus();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CategoryPage(title: widget.categoryName);
+                }));
               },
               child: Container(
                 margin: EdgeInsets.all(8.0),
