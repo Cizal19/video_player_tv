@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player_tv/widgets/CardsScroll.dart';
 import 'package:video_player_tv/widgets/HomePageCarousel.dart';
+import 'package:video_player_tv/widgets/RecommendedScroll.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -66,7 +67,7 @@ class Home extends StatelessWidget {
             ],
           ),
         ),
-        // CardsScroll(),
+        RecommendedScroll(),
       ]),
     );
   }

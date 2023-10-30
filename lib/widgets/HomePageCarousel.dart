@@ -81,6 +81,8 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
                                       ),
                                     ),
                                     ElevatedButton.icon(
+                                        focusNode:
+                                            FocusNode(canRequestFocus: true),
                                         onPressed: () {
                                           Navigator.push(context,
                                               MaterialPageRoute(

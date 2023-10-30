@@ -9,6 +9,7 @@ void main() {
         appBarTheme: AppBarTheme(
           color: Color(0xffffd700),
         ),
+        focusColor: Colors.blue,
         iconTheme: IconThemeData(color: Colors.white),
         tabBarTheme: TabBarTheme(
             labelColor: const Color.fromARGB(255, 10, 137, 240),
