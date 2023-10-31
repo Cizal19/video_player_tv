@@ -69,7 +69,11 @@ class _RecommendedScrollState extends State<RecommendedScroll> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return VideoPlayerScreen(
-                              videoUrl: list[index].sources[0]);
+                            videoUrl: list[index].sources[0],
+                            title: list[index].title,
+                            subtitle: list[index].subtitle,
+                            description: list[index].description,
+                          );
                         }));
                       } else if (event.logicalKey ==
                           LogicalKeyboardKey.arrowLeft) {
@@ -97,13 +101,13 @@ class _RecommendedScrollState extends State<RecommendedScroll> {
                     width: 250.0, // Adjust card width as needed
                     margin: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                      border: currentFocusedIndex == index
-                          ? Border.all(
-                              color: Colors.blue, // Border color when in focus
-                              width: 2.0, // Border width when in focus
-                            )
-                          : null,
-                    ),
+                        // border: currentFocusedIndex == index
+                        //     ? Border.all(
+                        //         color: Colors.blue, // Border color when in focus
+                        //         width: 2.0, // Border width when in focus
+                        //       )
+                        //     : null,
+                        ),
                     child: Card(
                       elevation: 4.0,
                       child: Column(

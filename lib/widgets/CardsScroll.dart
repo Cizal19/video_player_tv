@@ -169,7 +169,10 @@ class _CardsScrollState extends State<CardsScroll> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return VideoPlayerScreen(
-                              videoUrl: list[index].sources[0]);
+                              videoUrl: list[index].sources[0],
+                              title: list[index].title,
+                              subtitle: list[index].subtitle,
+                              description: list[index].description);
                         }));
                       } else if (event.logicalKey ==
                           LogicalKeyboardKey.arrowLeft) {

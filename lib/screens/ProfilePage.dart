@@ -69,6 +69,14 @@ class ProfileInfoCard extends StatelessWidget {
               leading: Icon(Icons.email, color: Colors.blue),
               title: Text('john.doe@example.com'),
             ),
+            ListTile(
+              leading: Icon(Icons.phone, color: Colors.blue),
+              title: Text('+1234567890'),
+            ),
+            ListTile(
+              leading: Icon(Icons.wc, color: Colors.blue),
+              title: Text('Male'),
+            )
           ],
         ),
       ),

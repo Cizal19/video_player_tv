@@ -58,7 +58,11 @@ class _ChannelListState extends State<ChannelList> {
   void handleSelect(List<Channel> channels) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return VideoPlayerScreen(
-          videoUrl: channels[selectedItemIndex].sources[0]);
+        videoUrl: channels[selectedItemIndex].sources[0],
+        title: channels[selectedItemIndex].title,
+        subtitle: channels[selectedItemIndex].subtitle,
+        description: channels[selectedItemIndex].description,
+      );
     }));
   }
 

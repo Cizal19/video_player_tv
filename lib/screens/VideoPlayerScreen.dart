@@ -3,9 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({Key? key, required this.videoUrl}) : super(key: key);
+  const VideoPlayerScreen(
+      {Key? key,
+      required this.videoUrl,
+      required this.title,
+      required this.subtitle,
+      required this.description})
+      : super(key: key);
 
   final String videoUrl;
+  final String title;
+  final String subtitle;
+  final String description;
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
@@ -37,16 +46,60 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         title: Text("Video Player"),
       ),
       body: SingleChildScrollView(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
+        child: Column(
           children: [
-            Container(
-              child: VideoPlayer(_controller),
-              height: 400,
-              width: double.infinity,
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  child: VideoPlayer(_controller),
+                  height: 400,
+                  width: double.infinity,
+                ),
+                _ControlsOverlay(controller: _controller),
+                VideoProgressIndicator(_controller, allowScrubbing: false),
+              ],
             ),
-            _ControlsOverlay(controller: _controller),
-            VideoProgressIndicator(_controller, allowScrubbing: false),
+            Card(
+              margin: EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            widget.subtitle,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        widget.description,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

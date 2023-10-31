@@ -88,7 +88,10 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
                                               MaterialPageRoute(
                                                   builder: (context) {
                                             return VideoPlayerScreen(
-                                                videoUrl: item.sources[0]);
+                                                videoUrl: item.sources[0],
+                                                title: item.title,
+                                                subtitle: item.subtitle,
+                                                description: item.description);
                                           }));
                                         },
                                         icon: Icon(
