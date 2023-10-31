@@ -56,7 +56,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   height: 400,
                   width: double.infinity,
                 ),
-                _ControlsOverlay(controller: _controller),
+                _ControlsOverlay(
+                  controller: _controller,
+                  isFullScreen: false,
+                ),
                 VideoProgressIndicator(_controller, allowScrubbing: false),
               ],
             ),
@@ -108,7 +111,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 }
 
 class _ControlsOverlay extends StatefulWidget {
-  const _ControlsOverlay({Key? key, required this.controller})
+  const _ControlsOverlay(
+      {Key? key, required this.controller, required this.isFullScreen})
       : super(key: key);
 
   static const _examplePlaybackRates = [
@@ -123,6 +127,7 @@ class _ControlsOverlay extends StatefulWidget {
   ];
 
   final VideoPlayerController controller;
+  final bool isFullScreen;
 
   @override
   State<_ControlsOverlay> createState() => _ControlsOverlayState();
@@ -227,6 +232,33 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                     onKey: (node, event) {
                       if (event is RawKeyDownEvent) {
                         if (event.logicalKey == LogicalKeyboardKey.select) {
+                          widget.isFullScreen
+                              ? Navigator.pop(context)
+                              : pushFullScreenVideo();
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
+                    },
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {},
+                      focusColor: Colors.blue,
+                      child: const Icon(
+                        Icons.fullscreen,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Focus(
+                    onKey: (node, event) {
+                      if (event is RawKeyDownEvent) {
+                        if (event.logicalKey == LogicalKeyboardKey.select) {
                           return KeyEventResult.handled;
                         }
                       }
@@ -280,5 +312,77 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
   void seekRight() async {
     var position = await widget.controller.position;
     widget.controller.seekTo(Duration(seconds: position!.inSeconds + 5));
+  }
+
+  void pushFullScreenVideo() {
+//This will help to hide the status bar and bottom bar of Mobile
+//also helps you to set preferred device orientations like landscape
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    SystemChrome.setPreferredOrientations(
+      [
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ],
+    );
+
+//This will help you to push fullscreen view of video player on top of current page
+
+    Navigator.of(context)
+        .push(
+      PageRouteBuilder(
+        opaque: false,
+        settings: RouteSettings(),
+        pageBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return Scaffold(
+              backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: false,
+              body: Dismissible(
+                  key: const Key('key'),
+                  direction: DismissDirection.vertical,
+                  onDismissed: (_) => Navigator.of(context).pop(),
+                  child: OrientationBuilder(
+                    builder: (context, orientation) {
+                      // var isPortrait = orientation == Orientation.portrait;
+                      return Container(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            AspectRatio(
+                              aspectRatio: widget.controller.value.aspectRatio,
+                              child: VideoPlayer(widget.controller),
+                            ),
+                            Positioned(
+                                bottom: 0,
+                                left: 220,
+                                child: _ControlsOverlay(
+                                  controller: widget.controller,
+                                  isFullScreen: true,
+                                )),
+                          ],
+                        ),
+                      );
+                    },
+                  )));
+        },
+      ),
+    )
+        .then(
+      (value) {
+//This will help you to set previous Device orientations of screen so App will continue for portrait mode
+
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
+        SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
+        );
+      },
+    );
   }
 }
